@@ -1,0 +1,123 @@
+
+Mandatory features (all cars listed below have them, so we can eliminate them from the scoreboard):
+Digital Cockpit
+<input type="number" [formControl]="someField">
+<div *ngIf="featurePoinsGetterMap$ | async as featurePoinsGetterMap" class="table-container">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 cars-table">
+    <ng-container matColumnDef="score">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Score </th>
+      <td mat-cell *matCellDef="let car"> 
+        {{ car.score }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="link">
+      <th mat-header-cell *matHeaderCellDef> Link </th>
+      <td mat-cell *matCellDef="let car"> <a href="#">Link</a> </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+      <td mat-cell *matCellDef="let car"> 
+        {{ car.price }} 
+        <ng-container
+          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'price', car: car }">
+        </ng-container>
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="sLine">
+      <th mat-header-cell *matHeaderCellDef> S Line </th>
+      <td mat-cell *matCellDef="let car"> 
+        {{ car.sLine ? 'Yes' : 'No' }}
+        <ng-container
+          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'sLine', car: car }">
+        </ng-container>
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="quattro">
+      <th mat-header-cell *matHeaderCellDef> Quattro </th>
+      <td mat-cell *matCellDef="let car"> {{ car.quattro ? 'Yes' : 'No' }}
+        <ng-container
+          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'quattro', car: car }">
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="engine">
+      <th mat-header-cell *matHeaderCellDef> Engine </th>
+      <td mat-cell *matCellDef="let car">
+        {{ car.engineType }}
+        <ng-container
+          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'engineType', car: car }">
+        </ng-container>
+        {{ car.engineHorsePower }}
+        <ng-container
+          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'engineHorsePower', car: car }">
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="reverseCamera">
+      <th mat-header-cell *matHeaderCellDef> Reverse Camera </th>
+      <td mat-cell *matCellDef="let car">
+        {{ car.reverseCamera ? 'Yes' : 'No' }}
+        <ng-container
+          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'reverseCamera', car: car }">
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="km">
+      <th mat-header-cell *matHeaderCellDef> Current KM </th>
+      <td mat-cell *matCellDef="let car">
+        {{ car.km }}
+        <ng-container
+          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'km', car: car }">
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="headlights">
+      <th mat-header-cell *matHeaderCellDef> Headlights </th>
+      <td mat-cell *matCellDef="let car">
+        {{ car.headligts }}
+        <ng-container
+          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'headligts', car: car }">
+        </ng-container>
+      </td>
+      
+    </ng-container>
+
+    <ng-container matColumnDef="ambientLighting">
+      <th mat-header-cell *matHeaderCellDef> Ambient Lighting </th>
+      <td mat-cell *matCellDef="let car">
+        {{ car.ambientLighting }}
+        <ng-container
+          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'ambientLighting', car: car }">
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="shiftPaddles">
+      <th mat-header-cell *matHeaderCellDef> Shift Paddles </th>
+      <td mat-cell *matCellDef="let car">
+        {{ car.shiftPaddles ? 'Yes' : 'No' }}
+        <ng-container
+          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'shiftPaddles', car: car }">
+        </ng-container>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+
+  <ng-template #featureScoreTemplate let-featureName let-car="car">
+    <span *ngIf="featurePoinsGetterMap[featureName](car) as featureScore"
+      [ngStyle]="{ color: featureScore > 0 ? 'green' : featureScore < 0 ? 'red' : 'yellow' }">
+      ({{ featureScore >= 0 ? '+' : '-' }}{{ featureScore }} points)
+    </span> 
+  </ng-template>
+</div>
