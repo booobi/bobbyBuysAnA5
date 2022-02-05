@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="rankingForm">
 
   <mat-list>
     <div mat-subheader>Config</div>
@@ -7,9 +7,9 @@
       <!-- TODO: info tooltip of how its calculated -->
       <div mat-line>
         <span>My perfect price is: </span>
-        <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
+        <mat-form-field appearance="standard" class="ml-5">
           <mat-label>Amount</mat-label>
-          <input matInput type="number" placeholder="0">
+          <input formControlName="idealPriceControl" matInput type="number" placeholder="0">
           <span matSuffix>€&nbsp;</span>
         </mat-form-field>
       </div>
@@ -21,7 +21,7 @@
         <span>To S Line trim level I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
           <!-- <mat-label>Points</mat-label> -->
-          <input matInput type="number" placeholder="0">
+          <input formControlName="sLinePointsControl" matInput type="number" placeholder="0">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
       </div>
@@ -33,7 +33,7 @@
         <span>To Quattro models I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
           <!-- <mat-label>Points</mat-label> -->
-          <input matInput type="number" placeholder="0">
+          <input formControlName="quattroPointsControl" matInput type="number" placeholder="0">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
       </div>
@@ -45,13 +45,13 @@
         <span>To TDI engines I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5 mr-5">
           <!-- <mat-label>Points</mat-label> -->
-          <input matInput type="number" placeholder="0">
+          <input formControlName="tdiEnginePointsControl" matInput type="number" placeholder="0">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
         <span>. To TFSI engines I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
           <!-- <mat-label>Points</mat-label> -->
-          <input matInput type="number" placeholder="0">
+          <input formControlName="tfsiEnginePointsControl" matInput type="number" placeholder="0">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
       </div>
@@ -63,7 +63,7 @@
         <span>To models with a reverse camera I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
           <!-- <mat-label>Points</mat-label> -->
-          <input matInput type="number" placeholder="0">
+          <input formControlName="reverseCameraPointsControl" matInput type="number" placeholder="0">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
       </div>
@@ -76,7 +76,7 @@
         <span>My perfect current KM is: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
           <mat-label>Amount</mat-label>
-          <input matInput type="number" placeholder="0">
+          <input formControlName="idealKmControl" matInput type="number" placeholder="0">
           <span matSuffix>km&nbsp;</span>
         </mat-form-field>
       </div>
@@ -88,13 +88,13 @@
         <span>To LED headlights I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5 mr-5">
           <!-- <mat-label>Points</mat-label> -->
-          <input matInput type="number" placeholder="0">
+          <input formControlName="ledHeadlightsPointsControl" matInput type="number" placeholder="0">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
         <span>. To Matrix LED headlights I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
           <!-- <mat-label>Points</mat-label> -->
-          <input matInput type="number" placeholder="0">
+          <input formControlName="matrixHeadlightsPointsControl" matInput type="number" placeholder="0">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
       </div>
@@ -106,13 +106,13 @@
         <span>To Standart (cup holder) interior ambient lighting I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5 mr-5">
           <!-- <mat-label>Points</mat-label> -->
-          <input matInput type="number" placeholder="0">
+          <input formControlName="standartAmbiencePointsControl" matInput type="number" placeholder="0">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
         <span>. To full ambient lighting I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
           <!-- <mat-label>Points</mat-label> -->
-          <input matInput type="number" placeholder="0">
+          <input formControlName="fullAmbiencePointsControl" matInput type="number" placeholder="0">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
       </div>

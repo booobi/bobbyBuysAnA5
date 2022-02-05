@@ -11,7 +11,11 @@
   </ul>
 </div>
 
-<app-ranking-configuration-form class="ml-20 mr-20"></app-ranking-configuration-form>
+<div class="flex">
+  <app-ranking-configuration-form class="ml-20 mr-20"></app-ranking-configuration-form>
+  <app-ranking-description></app-ranking-description>
+</div>
+
 
 <div *ngIf="featurePoinsGetterMap$ | async as featurePoinsGetterMap" class="table-container">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 cars-table">

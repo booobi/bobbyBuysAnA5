@@ -7,6 +7,7 @@ import { MatSortModule } from '@angular/material/sort';
 
 import { AppComponent } from './app.component';
 import { RankingConfigurationFormModule } from './ranking-configuration-form';
+import { RankingDescriptionModule } from './ranking-description';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { RankingConfigurationFormModule } from './ranking-configuration-form';
     MatTableModule,
     MatSortModule,
     RankingConfigurationFormModule,
+    RankingDescriptionModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
