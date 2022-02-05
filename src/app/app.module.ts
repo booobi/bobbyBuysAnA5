@@ -6,6 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 
 import { AppComponent } from './app.component';
+import { RankingConfigurationFormModule } from './ranking-configuration-form';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +16,7 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule,
     MatTableModule,
     MatSortModule,
+    RankingConfigurationFormModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

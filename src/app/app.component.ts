@@ -1,8 +1,9 @@
+import { combineLatest, map, Observable, of, shareReplay, Subject, takeUntil } from 'rxjs';
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { combineLatest, map, Observable, of, shareReplay, Subject, takeUntil, tap } from 'rxjs';
+
 import { A5FeaturePointsGetterMap, buildFeaturePointsGetterMap } from './audi-feature-ranking';
 import {
   A5,
@@ -11,6 +12,7 @@ import {
   A5_HEADLIGHTS,
   ScoredA5,
 } from './audi.types';
+import { createValueStream } from './utils/forms.utils';
 
 const mockCars: A5[] = [
   {
@@ -65,16 +67,15 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   destroy$ = new Subject<boolean>();
 
-  someField = new FormControl();
+  someField = new FormControl(1);
 
   dataSource = new MatTableDataSource<ScoredA5>([]);
 
   cars$: Observable<A5[]> = of(mockCars);
 
-  featurePoinsGetterMap$ = this.someField.valueChanges.pipe(
+  featurePoinsGetterMap$ = createValueStream<number>(this.someField).pipe(
     map(buildFeaturePointsGetterMap),
     shareReplay({refCount: true, bufferSize: 1}),
-    tap(console.log)
   );
 
   scoredCars$: Observable<ScoredA5[]> = combineLatest([

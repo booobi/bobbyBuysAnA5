@@ -1,7 +1,18 @@
 
-Mandatory features (all cars listed below have them, so we can eliminate them from the scoreboard):
-Digital Cockpit
-<input type="number" [formControl]="someField">
+<div class="description-container">
+  <span>Mandatory features (all cars listed below have them, so we can eliminate them from the scoreboard):</span> 
+  <ul>
+    <li>Digital Cockpit</li>
+    <li>At least 190HP(PS)</li>
+    <li>Either LED or Matrix LED headlights</li>
+    <!-- TODO badge -->
+    <li>NOT white or red color</li> 
+    <li>Below 10000km</li>
+  </ul>
+</div>
+
+<app-ranking-configuration-form class="ml-20 mr-20"></app-ranking-configuration-form>
+
 <div *ngIf="featurePoinsGetterMap$ | async as featurePoinsGetterMap" class="table-container">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 cars-table">
     <ng-container matColumnDef="score">
@@ -115,7 +126,7 @@ Digital Cockpit
 
 
   <ng-template #featureScoreTemplate let-featureName let-car="car">
-    <span *ngIf="featurePoinsGetterMap[featureName](car) as featureScore"
+    <span *ngIf="$any(featurePoinsGetterMap)[featureName](car) as featureScore"
       [ngStyle]="{ color: featureScore > 0 ? 'green' : featureScore < 0 ? 'red' : 'yellow' }">
       ({{ featureScore >= 0 ? '+' : '-' }}{{ featureScore }} points)
     </span> 
