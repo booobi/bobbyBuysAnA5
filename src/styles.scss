@@ -11,6 +11,10 @@ ul { margin: 0 0 }
     flex-direction: column;
   }
 
+  &--wrap {
+    flex-wrap: wrap;
+  }
+
   &--center {
     align-items: center;
     justify-content: center;
@@ -24,6 +28,12 @@ ul { margin: 0 0 }
 .flex-horizontal {
   display: flex;
   flex-direction: column;
+}
+
+.text {
+  &--meta {
+    opacity: .5;
+  }
 }
 
 

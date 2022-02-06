@@ -11,9 +11,9 @@
   </ul>
 </div>
 
-<div class="flex">
-  <app-ranking-configuration-form class="ml-20 mr-20"></app-ranking-configuration-form>
-  <app-ranking-description></app-ranking-description>
+<div class="flex flex--center flex--wrap ml-20 mr-20">
+  <app-ranking-configuration-form [formControl]="configuartionFormControl"></app-ranking-configuration-form>
+  <app-ranking-description (reset)="onReset()"></app-ranking-description>
 </div>
 
 
@@ -114,12 +114,12 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="shiftPaddles">
+    <ng-container matColumnDef="paddleShifters">
       <th mat-header-cell *matHeaderCellDef> Shift Paddles </th>
       <td mat-cell *matCellDef="let car">
-        {{ car.shiftPaddles ? 'Yes' : 'No' }}
+        {{ car.paddleShifters ? 'Yes' : 'No' }}
         <ng-container
-          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'shiftPaddles', car: car }">
+          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'paddleShifters', car: car }">
         </ng-container>
       </td>
     </ng-container>

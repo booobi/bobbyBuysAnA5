@@ -24,7 +24,7 @@ export interface A5 {
   km: number;
   headligts: A5_HEADLIGHTS;
   ambientLighting: A5_AMBIENT_LIGHTING;
-  shiftPaddles: boolean;
+  paddleShifters: boolean;
 }
 
 export type ScoredA5 = A5 & { score: number };

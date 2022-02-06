@@ -1,39 +1,48 @@
-import { A5, A5_AMBIENT_LIGHTING, A5_ENGINE, A5_HEADLIGHTS } from "./audi.types";
+import {
+  A5,
+  A5_AMBIENT_LIGHTING,
+  A5_ENGINE,
+  A5_HEADLIGHTS,
+} from './audi.types';
+import { RankingFormValue } from './ranking-configuration-form';
 
-const AWESOME_PRICE_BREAKPOINT = 32000
-const VERY_GOOD_PRICE_BREAKPOINT = 33000;
-
-
-export const buildFeaturePointsGetterMap = (val: number) => {
+export const buildFeaturePointsGetterMap = (
+  rankingFormValue: RankingFormValue
+): Record<keyof A5, Function> => {
   return {
-    ...A5FeaturePointsGetterMap,
-    price: (value: A5['price']) => (val === 1 ? (value === 123 ? 3 : 1) : (value === 456 ? 4 : 1)),
+    price: (car: A5) =>
+      car.price >= 1.1 * rankingFormValue.idealPrice
+        ? 4
+        : car.price <= 0.9 * rankingFormValue.idealPrice
+        ? 6
+        : 5,
+    ambientLighting: (car: A5) =>
+      car.ambientLighting === A5_AMBIENT_LIGHTING.FULL
+        ? rankingFormValue.fullAmbiencePoints
+        : car.ambientLighting === A5_AMBIENT_LIGHTING.STANDART
+        ? rankingFormValue.standartAmbiencePoints
+        : 0,
+    engineType: (car: A5) =>
+      car.engineType === A5_ENGINE.TDI
+        ? rankingFormValue.tdiEnginePoints
+        : rankingFormValue.tfsiEnginePoints,
+    engineHorsePower: (car: A5) => 0,
+    headligts: (car: A5) =>
+      car.headligts === A5_HEADLIGHTS.MATRIX
+        ? rankingFormValue.matrixHeadlightsPoints
+        : rankingFormValue.ledHeadlightsPoints,
+    km: (car: A5) =>
+      car.km >= 1.2 * rankingFormValue.idealKm
+        ? 4
+        : car.km <= 0.8 * rankingFormValue.idealKm
+        ? 6
+        : 5,
+    quattro: (car: A5) => (car.quattro ? rankingFormValue.quattroPoints : 0),
+    reverseCamera: (car: A5) =>
+      car.reverseCamera ? rankingFormValue.reverseCameraPoints : 0,
+    sLine: (car: A5) =>
+      car.sLine ? rankingFormValue.sLinePoints : 0,
+    paddleShifters: (car: A5) =>
+      car.paddleShifters ? rankingFormValue.paddleShiftersPoints : 0,
   };
-}
-
-export const A5FeaturePointsGetterMap: Record<keyof A5, Function> = {
-  ambientLighting: (value: A5['ambientLighting']) =>
-    value === A5_AMBIENT_LIGHTING.FULL
-      ? 3
-      : value === A5_AMBIENT_LIGHTING.STANDART
-      ? 2
-      : 1,
-  price: (value: A5['price']) => {
-    if (value <= AWESOME_PRICE_BREAKPOINT) {
-      return 3;
-    }
-    if (value <= VERY_GOOD_PRICE_BREAKPOINT) {
-      return 2;
-    }
-    return 1;
-  },
-  engineType: (value: A5['engineType']) => (value === A5_ENGINE.TDI ? 4 : 2),
-  engineHorsePower: (value: A5['engineHorsePower']) =>
-    value >= 190 && value <= 230 ? 3 : 1,
-  headligts: (value: A5['headligts']) => value === A5_HEADLIGHTS.MATRIX ? 2 : 1,
-  km: (value: A5['km']) => value <= 65000 ? 3 : value < 80000 ? 2 : 1,
-  quattro: (value: A5['quattro']) => value ? 3 : 0,
-  reverseCamera: (value: A5['reverseCamera']) => value ? 1 : -1,
-  sLine: (value: A5['sLine']) => value ? 3 : 0,
-  shiftPaddles: (value: A5['shiftPaddles']) => value ? 1 : 0,
 };

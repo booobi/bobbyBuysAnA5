@@ -1,10 +1,10 @@
-import { combineLatest, map, Observable, of, shareReplay, Subject, takeUntil } from 'rxjs';
+import { combineLatest, filter, map, Observable, of, shareReplay, Subject, takeUntil, tap } from 'rxjs';
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { A5FeaturePointsGetterMap, buildFeaturePointsGetterMap } from './audi-feature-ranking';
+import { buildFeaturePointsGetterMap } from './audi-feature-ranking';
 import {
   A5,
   A5_AMBIENT_LIGHTING,
@@ -13,6 +13,7 @@ import {
   ScoredA5,
 } from './audi.types';
 import { createValueStream } from './utils/forms.utils';
+import { RankingFormValue } from './ranking-configuration-form';
 
 const mockCars: A5[] = [
   {
@@ -25,7 +26,7 @@ const mockCars: A5[] = [
     km: 100000,
     quattro: true,
     sLine: true,
-    shiftPaddles: false,
+    paddleShifters: false,
   },
   {
     price: 456,
@@ -37,9 +38,24 @@ const mockCars: A5[] = [
     km: 100000,
     quattro: true,
     sLine: true,
-    shiftPaddles: false,
+    paddleShifters: false,
   },
 ]
+
+const BOBBYS_A5_FORM_VALUE: RankingFormValue = {
+  idealPrice: 32000,
+  sLinePoints: 3,
+  quattroPoints: 4,
+  idealKm: 60000,
+  fullAmbiencePoints: 2,
+  standartAmbiencePoints: 1,
+  ledHeadlightsPoints: 2,
+  matrixHeadlightsPoints: 3,
+  paddleShiftersPoints: 1,
+  reverseCameraPoints: 1,
+  tdiEnginePoints: 3,
+  tfsiEnginePoints: 1,
+}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -47,8 +63,6 @@ const mockCars: A5[] = [
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
-  readonly A5FeaturePointsGetterMap = A5FeaturePointsGetterMap;
-
   readonly displayedColumns = [
     'score',
     'link',
@@ -60,7 +74,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     'km',
     'headlights',
     'ambientLighting',
-    'shiftPaddles',
+    'paddleShifters',
   ];
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -73,9 +87,13 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   cars$: Observable<A5[]> = of(mockCars);
 
-  featurePoinsGetterMap$ = createValueStream<number>(this.someField).pipe(
+  configuartionFormControl = new FormControl();
+
+  featurePoinsGetterMap$ = createValueStream<RankingFormValue>(this.configuartionFormControl).pipe(
+    filter(v => !!v),
     map(buildFeaturePointsGetterMap),
     shareReplay({refCount: true, bufferSize: 1}),
+    tap(console.log),
   );
 
   scoredCars$: Observable<ScoredA5[]> = combineLatest([
@@ -88,6 +106,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   );
 
   ngOnInit() {
+    this.configuartionFormControl.setValue(BOBBYS_A5_FORM_VALUE);
     this.scoredCars$.pipe(takeUntil(this.destroy$)).subscribe((scoredCars) => {
       this.dataSource.data = scoredCars;
       this.dataSource.sort = this.sort;
@@ -103,11 +122,15 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.dataSource.sort = this.sort;
   }
 
+  onReset() {
+    this.configuartionFormControl.setValue(BOBBYS_A5_FORM_VALUE);
+  }
+
   private calculateCarScore(car: A5, featurePointsGetterMap: any) {
     return Object.entries(car).reduce(
-      (points, [a5FeatureKey, a5FeatureValue]) =>
+      (points, [a5FeatureKey]) =>
         points +
-        featurePointsGetterMap[a5FeatureKey as keyof A5](a5FeatureValue),
+        featurePointsGetterMap[a5FeatureKey as keyof A5](car),
       0
     );
   }
