@@ -7,8 +7,12 @@ ul { margin: 0 0 }
 .flex {
   display: flex;
 
-  &-horizontal {
+  &--vertical {
     flex-direction: column;
+  }
+
+  &--wrap {
+    flex-wrap: wrap;
   }
 
   &--wrap {
@@ -25,9 +29,8 @@ ul { margin: 0 0 }
   }
 }
 
-.flex-horizontal {
-  display: flex;
-  flex-direction: column;
+.items-center {
+  align-items: center;
 }
 
 .text {

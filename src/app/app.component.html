@@ -4,18 +4,23 @@
   <ul>
     <li>Digital Cockpit</li>
     <li>At least 190HP(PS)</li>
+    <li>At least 4 doors :)</li>
     <li>Either LED or Matrix LED headlights</li>
     <!-- TODO badge -->
-    <li>NOT white or red color</li> 
-    <li>Below 10000km</li>
+    <li>
+      <div class="flex items-center">
+        NOT white <span class="color-circle color-circle--white ml-5 mr-5"></span> or red <span class="color-circle color-circle--red ml-5 mr-5"></span> color
+      </div>
+    </li> 
+        
+    <li>Below 10000km mileage</li>
   </ul>
 </div>
 
 <div class="flex flex--center flex--wrap ml-20 mr-20">
   <app-ranking-configuration-form [formControl]="configuartionFormControl"></app-ranking-configuration-form>
-  <app-ranking-description (reset)="onReset()"></app-ranking-description>
+  <app-ranking-description [maxPoints]="$any(maxPoints$ | async)" (reset)="onReset()"></app-ranking-description>
 </div>
-
 
 <div *ngIf="featurePoinsGetterMap$ | async as featurePoinsGetterMap" class="table-container">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 cars-table">
@@ -32,11 +37,14 @@
   
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
-      <td mat-cell *matCellDef="let car"> 
-        {{ car.price }} 
-        <ng-container
-          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'price', car: car }">
-        </ng-container>
+      <td mat-cell *matCellDef="let car">
+        <div class="flex flex--wrap">
+          {{ car.price }} 
+          <ng-container
+            *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'price', car: car }">
+          </ng-container>
+        </div>
+        
       </td>
     </ng-container>
   
@@ -83,12 +91,12 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="km">
-      <th mat-header-cell *matHeaderCellDef> Current KM </th>
+    <ng-container matColumnDef="mileage">
+      <th mat-header-cell *matHeaderCellDef> Current mileage </th>
       <td mat-cell *matCellDef="let car">
-        {{ car.km }}
+        {{ car.mileage }}
         <ng-container
-          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'km', car: car }">
+          *ngTemplateOutlet="featureScoreTemplate; context: { $implicit: 'mileage', car: car }">
         </ng-container>
       </td>
     </ng-container>
@@ -131,7 +139,7 @@
 
   <ng-template #featureScoreTemplate let-featureName let-car="car">
     <span *ngIf="$any(featurePoinsGetterMap)[featureName](car) as featureScore"
-      [ngStyle]="{ color: featureScore > 0 ? 'green' : featureScore < 0 ? 'red' : 'yellow' }">
+      [ngStyle]="{ color: featureScore > 0 ? 'green' : 'red' }">
       ({{ featureScore >= 0 ? '+' : '-' }}{{ featureScore }} points)
     </span> 
   </ng-template>

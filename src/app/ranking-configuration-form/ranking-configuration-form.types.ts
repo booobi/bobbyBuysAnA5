@@ -5,7 +5,7 @@ export interface RankingFormValue {
   tdiEnginePoints: number;
   tfsiEnginePoints: number;
   reverseCameraPoints: number;
-  idealKm: number;
+  idealMileage: number;
   ledHeadlightsPoints: number;
   matrixHeadlightsPoints: number;
   standartAmbiencePoints: number;

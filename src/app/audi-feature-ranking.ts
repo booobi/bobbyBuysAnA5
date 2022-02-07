@@ -4,18 +4,34 @@ import {
   A5_ENGINE,
   A5_HEADLIGHTS,
 } from './audi.types';
+import { MAX_PRICE_POINTS } from './constants';
 import { RankingFormValue } from './ranking-configuration-form';
+
+const DEVIATION_PERCENTAGE = 5;
+
+const calculateDeviationPoints = (carAmount: number, idealAmount: number) => {
+  const chosenDeviationDecimal = DEVIATION_PERCENTAGE / 100;
+  // if >= 0 - the car costs less
+  // if < 0 - the car costs more
+  const carPriceDeviationDecimal = 1 - carAmount / idealAmount;
+  const carPriceDeviationFromIdeal =
+    Math.abs(carPriceDeviationDecimal / chosenDeviationDecimal);
+
+  if (carPriceDeviationDecimal > 0 || carPriceDeviationFromIdeal <= 1) {
+    return 10;
+  }
+
+  // subscract 1 point for each deviation
+  const pointsAwarded = 10 - Math.floor(carPriceDeviationFromIdeal);
+
+  return pointsAwarded >= 0 ? pointsAwarded : 0; 
+}
 
 export const buildFeaturePointsGetterMap = (
   rankingFormValue: RankingFormValue
 ): Record<keyof A5, Function> => {
   return {
-    price: (car: A5) =>
-      car.price >= 1.1 * rankingFormValue.idealPrice
-        ? 4
-        : car.price <= 0.9 * rankingFormValue.idealPrice
-        ? 6
-        : 5,
+    price: (car: A5) => calculateDeviationPoints(car.price, rankingFormValue.idealPrice),
     ambientLighting: (car: A5) =>
       car.ambientLighting === A5_AMBIENT_LIGHTING.FULL
         ? rankingFormValue.fullAmbiencePoints
@@ -31,12 +47,7 @@ export const buildFeaturePointsGetterMap = (
       car.headligts === A5_HEADLIGHTS.MATRIX
         ? rankingFormValue.matrixHeadlightsPoints
         : rankingFormValue.ledHeadlightsPoints,
-    km: (car: A5) =>
-      car.km >= 1.2 * rankingFormValue.idealKm
-        ? 4
-        : car.km <= 0.8 * rankingFormValue.idealKm
-        ? 6
-        : 5,
+    mileage: (car: A5) => calculateDeviationPoints(car.mileage, rankingFormValue.idealMileage),
     quattro: (car: A5) => (car.quattro ? rankingFormValue.quattroPoints : 0),
     reverseCamera: (car: A5) =>
       car.reverseCamera ? rankingFormValue.reverseCameraPoints : 0,

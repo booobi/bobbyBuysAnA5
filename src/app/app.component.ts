@@ -1,5 +1,19 @@
-import { combineLatest, filter, map, Observable, of, shareReplay, Subject, takeUntil, tap } from 'rxjs';
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, ViewChild } from '@angular/core';
+import {
+  combineLatest,
+  map,
+  Observable,
+  of,
+  shareReplay,
+  Subject,
+  takeUntil,
+} from 'rxjs';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,8 +26,9 @@ import {
   A5_HEADLIGHTS,
   ScoredA5,
 } from './audi.types';
-import { createValueStream } from './utils/forms.utils';
+import { createValueStream } from './utils';
 import { RankingFormValue } from './ranking-configuration-form';
+import { MAX_MILEAGE_POINTS, MAX_PRICE_POINTS } from './constants';
 
 const mockCars: A5[] = [
   {
@@ -23,7 +38,7 @@ const mockCars: A5[] = [
     engineType: A5_ENGINE.TDI,
     headligts: A5_HEADLIGHTS.LED,
     reverseCamera: true,
-    km: 100000,
+    mileage: 100000,
     quattro: true,
     sLine: true,
     paddleShifters: false,
@@ -35,27 +50,28 @@ const mockCars: A5[] = [
     engineType: A5_ENGINE.TDI,
     headligts: A5_HEADLIGHTS.LED,
     reverseCamera: false,
-    km: 100000,
+    mileage: 100000,
     quattro: true,
     sLine: true,
-    paddleShifters: false,
+    paddleShifters: true,
   },
-]
+];
 
 const BOBBYS_A5_FORM_VALUE: RankingFormValue = {
-  idealPrice: 32000,
-  sLinePoints: 3,
+  idealPrice: 33000,
+  sLinePoints: 4,
   quattroPoints: 4,
-  idealKm: 60000,
+  idealMileage: 60000,
   fullAmbiencePoints: 2,
   standartAmbiencePoints: 1,
   ledHeadlightsPoints: 2,
   matrixHeadlightsPoints: 3,
   paddleShiftersPoints: 1,
   reverseCameraPoints: 1,
-  tdiEnginePoints: 3,
-  tfsiEnginePoints: 1,
-}
+  tdiEnginePoints: 10,
+  tfsiEnginePoints: 5,
+};
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -71,7 +87,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     'quattro',
     'engine',
     'reverseCamera',
-    'km',
+    'mileage',
     'headlights',
     'ambientLighting',
     'paddleShifters',
@@ -79,21 +95,45 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  destroy$ = new Subject<boolean>();
-
-  someField = new FormControl(1);
-
   dataSource = new MatTableDataSource<ScoredA5>([]);
+
+  configuartionFormControl = new FormControl(BOBBYS_A5_FORM_VALUE);
 
   cars$: Observable<A5[]> = of(mockCars);
 
-  configuartionFormControl = new FormControl();
+  maxPoints$ = createValueStream<RankingFormValue>(this.configuartionFormControl).pipe(
+    map((configFormValue) => {
+      return (
+        MAX_PRICE_POINTS +
+        configFormValue.sLinePoints +
+        configFormValue.quattroPoints +
+        // max of engines
+        Math.max(
+          configFormValue.tdiEnginePoints,
+          configFormValue.tfsiEnginePoints
+        ) +
+        configFormValue.reverseCameraPoints +
+        MAX_MILEAGE_POINTS +
+        // max of headlights
+        Math.max(
+          configFormValue.ledHeadlightsPoints,
+          configFormValue.matrixHeadlightsPoints
+        ) +
+        // max of ambient lighting
+        Math.max(
+          configFormValue.standartAmbiencePoints,
+          configFormValue.fullAmbiencePoints
+        ) +
+        configFormValue.paddleShiftersPoints
+      );
+    })
+  );
 
-  featurePoinsGetterMap$ = createValueStream<RankingFormValue>(this.configuartionFormControl).pipe(
-    filter(v => !!v),
+  featurePoinsGetterMap$ = createValueStream<RankingFormValue>(
+    this.configuartionFormControl
+  ).pipe(
     map(buildFeaturePointsGetterMap),
-    shareReplay({refCount: true, bufferSize: 1}),
-    tap(console.log),
+    shareReplay({ refCount: true, bufferSize: 1 })
   );
 
   scoredCars$: Observable<ScoredA5[]> = combineLatest([
@@ -101,12 +141,16 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.featurePoinsGetterMap$,
   ]).pipe(
     map(([cars, getterMap]) =>
-      cars.map((car) => ({ ...car, score: this.calculateCarScore(car, getterMap) }))
+      cars.map((car) => ({
+        ...car,
+        score: this.calculateCarScore(car, getterMap),
+      }))
     )
   );
 
+  private destroy$ = new Subject<boolean>();
+
   ngOnInit() {
-    this.configuartionFormControl.setValue(BOBBYS_A5_FORM_VALUE);
     this.scoredCars$.pipe(takeUntil(this.destroy$)).subscribe((scoredCars) => {
       this.dataSource.data = scoredCars;
       this.dataSource.sort = this.sort;
@@ -129,8 +173,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   private calculateCarScore(car: A5, featurePointsGetterMap: any) {
     return Object.entries(car).reduce(
       (points, [a5FeatureKey]) =>
-        points +
-        featurePointsGetterMap[a5FeatureKey as keyof A5](car),
+        points + featurePointsGetterMap[a5FeatureKey as keyof A5](car),
       0
     );
   }

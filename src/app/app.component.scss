@@ -1,3 +1,18 @@
+.color-circle {
+    display: inline-block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border: 1px solid gray;
+
+    &--white {
+        background-color: white;
+    }
+
+    &--red {
+        background-color: red;
+    }
+}
 .description-container {
     margin: 20px 20px;
 }
@@ -8,6 +23,6 @@
     justify-content: center;
 
     .cars-table {
-        width: 80%;
+        min-width: 80%;
     }
 }

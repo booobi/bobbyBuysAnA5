@@ -21,7 +21,7 @@ export interface A5 {
   engineType: A5_ENGINE,
   engineHorsePower: number;
   reverseCamera: boolean;
-  km: number;
+  mileage: number;
   headligts: A5_HEADLIGHTS;
   ambientLighting: A5_AMBIENT_LIGHTING;
   paddleShifters: boolean;

@@ -9,6 +9,7 @@ import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from 
 
 import { createValueStream } from '../utils';
 import { RankingFormValue } from './ranking-configuration-form.types';
+import { MAX_MILEAGE_POINTS, MAX_PRICE_POINTS } from '../constants';
 
 @Component({
   selector: 'app-ranking-configuration-form',
@@ -26,6 +27,9 @@ import { RankingFormValue } from './ranking-configuration-form.types';
 export class RankingConfigurationFormComponent
   implements OnInit, OnDestroy, ControlValueAccessor
 {
+  readonly MAX_PRICE_POINTS = MAX_PRICE_POINTS;
+  readonly MAX_MILEAGE_POINTS = MAX_MILEAGE_POINTS;
+
   rankingForm = new FormGroup({
     idealPrice: new FormControl(0),
     sLinePoints: new FormControl(0),
@@ -33,7 +37,7 @@ export class RankingConfigurationFormComponent
     tdiEnginePoints: new FormControl(0),
     tfsiEnginePoints: new FormControl(0),
     reverseCameraPoints: new FormControl(0),
-    idealKm: new FormControl(0),
+    idealMileage: new FormControl(0),
     ledHeadlightsPoints: new FormControl(0),
     matrixHeadlightsPoints: new FormControl(0),
     standartAmbiencePoints: new FormControl(0),
