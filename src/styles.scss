@@ -33,6 +33,10 @@ ul { margin: 0 0 }
   align-items: center;
 }
 
+.justify-end {
+  justify-content: end;
+}
+
 .text {
   &--meta {
     opacity: .5;

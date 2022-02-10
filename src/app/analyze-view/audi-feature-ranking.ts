@@ -4,7 +4,7 @@ import {
   A5_ENGINE,
   A5_HEADLIGHTS,
 } from './audi.types';
-import { MAX_PRICE_POINTS } from './constants';
+import { MAX_PRICE_POINTS } from '../constants';
 import { RankingFormValue } from './ranking-configuration-form';
 
 const DEVIATION_PERCENTAGE = 5;

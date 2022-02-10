@@ -7,9 +7,10 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { createValueStream } from '../utils';
+import { createValueStream } from '../../utils';
+import { MAX_MILEAGE_POINTS, MAX_PRICE_POINTS } from '../../constants';
+
 import { RankingFormValue } from './ranking-configuration-form.types';
-import { MAX_MILEAGE_POINTS, MAX_PRICE_POINTS } from '../constants';
 
 @Component({
   selector: 'app-ranking-configuration-form',

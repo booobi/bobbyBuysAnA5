@@ -1,7 +1,7 @@
 <form [formGroup]="rankingForm">
 
   <mat-list>
-    <div mat-subheader>Points</div>
+    <div mat-subheader>Points configuration</div>
     <mat-list-item>
       <mat-icon mat-list-icon>euro</mat-icon>
       <!-- TODO: slider - 'How likely are you to diviate from this price' -->
@@ -11,7 +11,7 @@
         <span>My perfect price is: </span>
         <span class="ml-5 mr-5">
           <mat-form-field appearance="standard">
-            <input formControlName="idealPrice" matInput type="number" placeholder="0" class="points-value">
+            <input #test formControlName="idealPrice" matInput type="number" placeholder="0" class="points-value">
             <span matSuffix>€&nbsp;</span>
           </mat-form-field>
           .
