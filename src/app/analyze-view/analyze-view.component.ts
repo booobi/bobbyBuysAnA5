@@ -7,36 +7,196 @@ import { MAX_MILEAGE_POINTS, MAX_PRICE_POINTS } from '../constants';
 import { createValueStream } from '../utils';
 import { buildFeaturePointsGetterMap } from './audi-feature-ranking';
 
-import { A5, A5_AMBIENT_LIGHTING, A5_ENGINE, A5_HEADLIGHTS, ScoredA5 } from './audi.types';
+import { A5, A5offer, A5_AMBIENT_LIGHTING, A5_ENGINE, A5_HEADLIGHTS, ScoredA5offer } from './audi.types';
 import { RankingFormValue } from './ranking-configuration-form';
 import { tableStyleConfig } from './table-stye.config';
 
 
-const mockCars: A5[] = [
+const mockCars: A5offer[] = [
   {
-    price: 123,
-    ambientLighting: A5_AMBIENT_LIGHTING.STANDART,
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=334091380',
+    price: 32499,
+    ambientLighting: A5_AMBIENT_LIGHTING.NONE,
     engineHorsePower: 190,
     engineType: A5_ENGINE.TDI,
     headligts: A5_HEADLIGHTS.LED,
-    reverseCamera: true,
-    mileage: 100000,
+    reverseCamera: false,
+    mileage: 38154,
     quattro: true,
-    sLine: true,
-    paddleShifters: false,
+    sLine: false,
+    paddleShifters: true,
   },
   {
-    price: 456,
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=331432532',
+    price: 33650,
+    ambientLighting: A5_AMBIENT_LIGHTING.NONE,
+    engineHorsePower: 190,
+    engineType: A5_ENGINE.TDI,
+    headligts: A5_HEADLIGHTS.LED,
+    reverseCamera: false,
+    mileage: 58800,
+    quattro: false,
+    sLine: true,
+    paddleShifters: true,
+  },
+  {
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=338522460',
+    price: 33990,
     ambientLighting: A5_AMBIENT_LIGHTING.STANDART,
     engineHorsePower: 190,
     engineType: A5_ENGINE.TDI,
     headligts: A5_HEADLIGHTS.LED,
     reverseCamera: false,
-    mileage: 100000,
+    mileage: 46000,
+    quattro: false,
+    sLine: false,
+    paddleShifters: true,
+  },
+  {
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=338418196',
+    price: 36000,
+    ambientLighting: A5_AMBIENT_LIGHTING.FULL,
+    engineHorsePower: 190,
+    engineType: A5_ENGINE.TDI,
+    headligts: A5_HEADLIGHTS.LED,
+    reverseCamera: true,
+    mileage: 52000,
     quattro: true,
     sLine: true,
     paddleShifters: true,
   },
+  {
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=334091380',
+    price: 32499,
+    ambientLighting: A5_AMBIENT_LIGHTING.NONE,
+    engineHorsePower: 190,
+    engineType: A5_ENGINE.TDI,
+    headligts: A5_HEADLIGHTS.LED,
+    reverseCamera: true,
+    mileage: 38154,
+    quattro: true,
+    sLine: false,
+    paddleShifters: true,
+  },
+
+  {
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=335629846',
+    price: 35025,
+    ambientLighting: A5_AMBIENT_LIGHTING.NONE,
+    engineHorsePower: 190,
+    engineType: A5_ENGINE.TDI,
+    headligts: A5_HEADLIGHTS.LED,
+    reverseCamera: true,
+    mileage: 45775,
+    quattro: false,
+    sLine: true,
+    paddleShifters: true,
+  },
+  {
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=338404650',
+    price: 34990,
+    ambientLighting: A5_AMBIENT_LIGHTING.STANDART,
+    engineHorsePower: 190,
+    engineType: A5_ENGINE.TDI,
+    headligts: A5_HEADLIGHTS.LED,
+    reverseCamera: true,
+    mileage: 54000,
+    quattro: false,
+    sLine: true,
+    paddleShifters: true,
+  },
+  {
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=330120221',
+    price: 33450,
+    ambientLighting: A5_AMBIENT_LIGHTING.FULL,
+    engineHorsePower: 190,
+    engineType: A5_ENGINE.TDI,
+    headligts: A5_HEADLIGHTS.LED,
+    reverseCamera: true,
+    mileage: 41360,
+    quattro: false,
+    sLine: false,
+    paddleShifters: true,
+  },
+  {
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=337179364',
+    price: 30680,
+    ambientLighting: A5_AMBIENT_LIGHTING.STANDART,
+    engineHorsePower: 190,
+    engineType: A5_ENGINE.TDI,
+    headligts: A5_HEADLIGHTS.LED,
+    reverseCamera: true,
+    mileage: 73400,
+    quattro: false,
+    sLine: false,
+    paddleShifters: true,
+  },
+  {
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=339217737',
+    price: 35800,
+    ambientLighting: A5_AMBIENT_LIGHTING.STANDART,
+    engineHorsePower: 190,
+    engineType: A5_ENGINE.TDI,
+    headligts: A5_HEADLIGHTS.LED,
+    reverseCamera: false,
+    mileage: 29000,
+    quattro: true,
+    sLine: true,
+    paddleShifters: true,
+  },
+  {
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=327590824',
+    price: 35900,
+    ambientLighting: A5_AMBIENT_LIGHTING.NONE,
+    engineHorsePower: 218,
+    engineType: A5_ENGINE.TDI,
+    headligts: A5_HEADLIGHTS.LED,
+    reverseCamera: true,
+    mileage: 74990,
+    quattro: true,
+    sLine: true,
+    paddleShifters: true,
+  },
+  {
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=338398773',
+    price: 33333,
+    ambientLighting: A5_AMBIENT_LIGHTING.NONE,
+    engineHorsePower: 190,
+    engineType: A5_ENGINE.TDI,
+    headligts: A5_HEADLIGHTS.LED,
+    reverseCamera: false,
+    mileage: 60000,
+    quattro: true,
+    sLine: true,
+    paddleShifters: true,
+  },
+  {
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=329297487',
+    price: 35860,
+    ambientLighting: A5_AMBIENT_LIGHTING.NONE,
+    engineHorsePower: 190,
+    engineType: A5_ENGINE.TDI,
+    headligts: A5_HEADLIGHTS.LED,
+    reverseCamera: false,
+    mileage: 37791,
+    quattro: true,
+    sLine: true,
+    paddleShifters: true,
+  },
+  {
+    link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=337466441',
+    price: 34550,
+    ambientLighting: A5_AMBIENT_LIGHTING.NONE,
+    engineHorsePower: 190,
+    engineType: A5_ENGINE.TDI,
+    headligts: A5_HEADLIGHTS.LED,
+    reverseCamera: true,
+    mileage: 77750,
+    quattro: false,
+    sLine: true,
+    paddleShifters: true,
+
+  }
 ];
 
 const BOBBYS_A5_FORM_VALUE: RankingFormValue = {
@@ -77,11 +237,11 @@ export class AnalyzeViewComponent implements OnInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  dataSource = new MatTableDataSource<ScoredA5>([]);
+  dataSource = new MatTableDataSource<ScoredA5offer>([]);
 
   configuartionFormControl = new FormControl(BOBBYS_A5_FORM_VALUE);
 
-  cars$: Observable<A5[]> = of(mockCars);
+  cars$: Observable<A5offer[]> = of(mockCars);
 
   maxPoints$ = createValueStream<RankingFormValue>(this.configuartionFormControl).pipe(
     map((configFormValue) => {
@@ -118,7 +278,7 @@ export class AnalyzeViewComponent implements OnInit {
     shareReplay({ refCount: true, bufferSize: 1 })
   );
 
-  scoredCars$: Observable<ScoredA5[]> = combineLatest([
+  scoredCars$: Observable<ScoredA5offer[]> = combineLatest([
     this.cars$,
     this.featurePoinsGetterMap$,
   ]).pipe(
@@ -152,11 +312,12 @@ export class AnalyzeViewComponent implements OnInit {
     this.configuartionFormControl.setValue(BOBBYS_A5_FORM_VALUE);
   }
 
-  private calculateCarScore(car: A5, featurePointsGetterMap: any) {
-    return Object.entries(car).reduce(
-      (points, [a5FeatureKey]) =>
-        points + featurePointsGetterMap[a5FeatureKey as keyof A5](car),
-      0
-    );
+  private calculateCarScore(car: A5offer, featurePointsGetterMap: any) {
+    return Object.keys(car)
+      .reduce(
+        (points, a5FeatureKey) =>
+          points + featurePointsGetterMap[a5FeatureKey as keyof A5](car),
+        0
+      );
   }
 }

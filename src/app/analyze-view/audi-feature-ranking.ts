@@ -1,10 +1,11 @@
 import {
   A5,
+  A5offer,
   A5_AMBIENT_LIGHTING,
   A5_ENGINE,
   A5_HEADLIGHTS,
 } from './audi.types';
-import { MAX_PRICE_POINTS } from '../constants';
+import { MAX_PRICE_POINTS } from '../constants'; // TODO: use this
 import { RankingFormValue } from './ranking-configuration-form';
 
 const DEVIATION_PERCENTAGE = 5;
@@ -29,31 +30,32 @@ const calculateDeviationPoints = (carAmount: number, idealAmount: number) => {
 
 export const buildFeaturePointsGetterMap = (
   rankingFormValue: RankingFormValue
-): Record<keyof A5, Function> => {
+): Record<keyof A5offer, Function> => {
   return {
-    price: (car: A5) => calculateDeviationPoints(car.price, rankingFormValue.idealPrice),
-    ambientLighting: (car: A5) =>
+    link: (car: A5offer) => 0,
+    price: (car: A5offer) => calculateDeviationPoints(car.price, rankingFormValue.idealPrice),
+    ambientLighting: (car: A5offer) =>
       car.ambientLighting === A5_AMBIENT_LIGHTING.FULL
         ? rankingFormValue.fullAmbiencePoints
         : car.ambientLighting === A5_AMBIENT_LIGHTING.STANDART
         ? rankingFormValue.standartAmbiencePoints
         : 0,
-    engineType: (car: A5) =>
+    engineType: (car: A5offer) =>
       car.engineType === A5_ENGINE.TDI
         ? rankingFormValue.tdiEnginePoints
         : rankingFormValue.tfsiEnginePoints,
-    engineHorsePower: (car: A5) => 0,
-    headligts: (car: A5) =>
+    engineHorsePower: (car: A5offer) => 0,
+    headligts: (car: A5offer) =>
       car.headligts === A5_HEADLIGHTS.MATRIX
         ? rankingFormValue.matrixHeadlightsPoints
         : rankingFormValue.ledHeadlightsPoints,
-    mileage: (car: A5) => calculateDeviationPoints(car.mileage, rankingFormValue.idealMileage),
-    quattro: (car: A5) => (car.quattro ? rankingFormValue.quattroPoints : 0),
-    reverseCamera: (car: A5) =>
+    mileage: (car: A5offer) => calculateDeviationPoints(car.mileage, rankingFormValue.idealMileage),
+    quattro: (car: A5offer) => (car.quattro ? rankingFormValue.quattroPoints : 0),
+    reverseCamera: (car: A5offer) =>
       car.reverseCamera ? rankingFormValue.reverseCameraPoints : 0,
-    sLine: (car: A5) =>
+    sLine: (car: A5offer) =>
       car.sLine ? rankingFormValue.sLinePoints : 0,
-    paddleShifters: (car: A5) =>
+    paddleShifters: (car: A5offer) =>
       car.paddleShifters ? rankingFormValue.paddleShiftersPoints : 0,
   };
 };

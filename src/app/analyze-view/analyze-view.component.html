@@ -2,7 +2,9 @@
   <span>Mandatory features (all cars listed below have them, so we can eliminate them from the scoreboard):</span> 
   <ul>
     <li>Digital Cockpit</li>
+    <li>At least Sline or Quattro (preferebly both)</li>
     <li>At least 190HP(PS)</li>
+    <li>Automatic transmission</li>
     <li>At least 4 doors :)</li>
     <li>Either LED or Matrix LED headlights</li>
     <!-- TODO badge -->
@@ -25,12 +27,12 @@
     <ng-container matColumnDef="score">
       <th mat-header-cell *matHeaderCellDef mat-sort-header [style.width]="tableStyleConfig.score"> Score </th>
       <td mat-cell *matCellDef="let car; let i = index"> 
-        <span [matBadge]="i+1" [matBadgeColor]="i+1 > 1 ? 'warn' : 'primary'" matBadgeOverlap="false">{{ car.score }}</span>
+        <span [matBadge]=" i<3 ? 'emoji_events' : null" class="offer-gold-medal" [matBadgeColor]="i+1 > 1 ? 'warn' : 'primary'" matBadgeOverlap="false">{{ car.score }}</span>
       </td>
     </ng-container>
     <ng-container matColumnDef="link">
       <th mat-header-cell *matHeaderCellDef [style.width]="tableStyleConfig.link"> Link </th>
-      <td mat-cell *matCellDef="let car"> <a href="#">Link</a> </td>
+      <td mat-cell *matCellDef="let car"> <a [href]="car.link">Link</a> </td>
     </ng-container>
   
     <ng-container matColumnDef="price">
@@ -86,7 +88,7 @@
     </ng-container>
 
     <ng-container matColumnDef="mileage">
-      <th mat-header-cell *matHeaderCellDef [style.width]="tableStyleConfig.mileage"> Current mileage </th>
+      <th mat-header-cell *matHeaderCellDef [style.width]="tableStyleConfig.mileage"> Current mileage (km) </th>
       <td mat-cell *matCellDef="let car">
         {{ car.mileage }}
         <ng-container
@@ -117,7 +119,7 @@
     </ng-container>
 
     <ng-container matColumnDef="paddleShifters">
-      <th mat-header-cell *matHeaderCellDef [style.width]="tableStyleConfig.paddleShifters"> Shift Paddles </th>
+      <th mat-header-cell *matHeaderCellDef [style.width]="tableStyleConfig.paddleShifters"> Paddle shifters </th>
       <td mat-cell *matCellDef="let car">
         {{ car.paddleShifters ? 'Yes' : 'No' }}
         <ng-container

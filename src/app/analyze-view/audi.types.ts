@@ -15,7 +15,6 @@ export enum A5_AMBIENT_LIGHTING {
 }
 
 export interface A5 {
-  price: number;
   sLine: boolean;
   quattro: boolean;
   engineType: A5_ENGINE,
@@ -27,4 +26,6 @@ export interface A5 {
   paddleShifters: boolean;
 }
 
-export type ScoredA5 = A5 & { score: number };
+export type A5offer = A5 & { link: string, price: number }
+
+export type ScoredA5offer = A5offer & { score: number };

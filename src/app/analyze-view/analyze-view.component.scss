@@ -13,3 +13,16 @@
         background-color: red;
     }
 }
+
+// cool hack to support mat-badge icons
+// credit: https://stackoverflow.com/questions/52161297/angular-material-badge-make-matbadge-contain-an-icon-instead-of-text
+.mat-badge-content {
+    font-family: 'Material Icons';
+}
+
+// hack for custom mat-badge colors (I don't want to play with material theming)
+// https://stackoverflow.com/questions/58537350/how-to-customize-the-color-of-specific-mat-badge
+.offer-gold-medal .mat-badge-content {
+    background: red;
+    color: blue;
+}
