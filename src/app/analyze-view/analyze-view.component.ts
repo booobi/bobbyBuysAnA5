@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortable } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { combineLatest, map, Observable, of, shareReplay, Subject, takeUntil } from 'rxjs';
 import { MAX_MILEAGE_POINTS, MAX_PRICE_POINTS } from '../constants';
@@ -306,6 +306,27 @@ export class AnalyzeViewComponent implements OnInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.sort.sort(({ id: 'score', start: 'desc'}) as MatSortable);
+  }
+
+  medalClassGetter$: Observable<(carScore: number) => string> = this.scoredCars$.pipe(map(scoredCars => carScore => {
+    const sortedScores = [...(new Set(scoredCars.map(scoredCar => scoredCar.score)))].sort().reverse();
+    return this.getScoreClass(sortedScores.indexOf(carScore)); 
+  } ))
+
+  getScoreClass(index: number) {
+    switch(index) {
+      case 0: {
+        return 'offer-gold-medal';
+      }
+      case 1: {
+        return 'offer-silver-medal';
+      }
+      case 2: {
+        return 'offer-bronze-medal';
+      }
+      default: return '';
+    } 
   }
 
   onReset() {

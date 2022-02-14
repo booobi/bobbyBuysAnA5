@@ -11,12 +11,20 @@
         <span>My perfect price is: </span>
         <span class="ml-5 mr-5">
           <mat-form-field appearance="standard">
-            <input #test formControlName="idealPrice" matInput type="number" placeholder="0" class="points-value">
+            <input formControlName="idealPrice" matInput type="number" placeholder="0" class="points-value">
             <span matSuffix>€&nbsp;</span>
           </mat-form-field>
           .
         </span>
-        <span> Prices within <span class="deviation">5%</span> of this amout awards <span class="points-value">{{ MAX_PRICE_POINTS }}</span> points</span>
+        <span> Prices within <span class="deviation">5%</span> of this amout awards <span class="points-value">{{ MAX_PRICE_POINTS }}</span> points.
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Price calculation information"
+            matTooltip="Info about the action">
+            info_outline
+          </mat-icon>
+        </span>
+
       </div>
     </mat-list-item>
 

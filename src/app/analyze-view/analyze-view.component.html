@@ -2,7 +2,7 @@
   <span>Mandatory features (all cars listed below have them, so we can eliminate them from the scoreboard):</span> 
   <ul>
     <li>Digital Cockpit</li>
-    <li>At least Sline or Quattro (preferebly both)</li>
+    <li>At least S Line trim or Quattro</li>
     <li>At least 190HP(PS)</li>
     <li>Automatic transmission</li>
     <li>At least 4 doors :)</li>
@@ -26,8 +26,16 @@
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 cars-table" style="width: 100%;">
     <ng-container matColumnDef="score">
       <th mat-header-cell *matHeaderCellDef mat-sort-header [style.width]="tableStyleConfig.score"> Score </th>
-      <td mat-cell *matCellDef="let car; let i = index"> 
-        <span [matBadge]=" i<3 ? 'emoji_events' : null" class="offer-gold-medal" [matBadgeColor]="i+1 > 1 ? 'warn' : 'primary'" matBadgeOverlap="false">{{ car.score }}</span>
+      <td mat-cell *matCellDef="let car; let i = index">
+        <span
+          *ngIf="(medalClassGetter$ | async)!(car.score) as medalClass; else basicScoreTemplate"
+          matBadge="emoji_events"
+          [ngClass]="medalClass"
+          matBadgeOverlap="false">{{ car.score }}
+        </span>
+        <ng-template #basicScoreTemplate>
+          <span>{{ car.score }}</span>
+        </ng-template>
       </td>
     </ng-container>
     <ng-container matColumnDef="link">

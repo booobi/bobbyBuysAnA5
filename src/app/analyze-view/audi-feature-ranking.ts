@@ -12,6 +12,7 @@ const DEVIATION_PERCENTAGE = 5;
 
 const calculateDeviationPoints = (carAmount: number, idealAmount: number) => {
   const chosenDeviationDecimal = DEVIATION_PERCENTAGE / 100;
+  const subsequentDeviationDecimal = 1/100;
   // if >= 0 - the car costs less
   // if < 0 - the car costs more
   const carPriceDeviationDecimal = 1 - carAmount / idealAmount;
@@ -21,6 +22,14 @@ const calculateDeviationPoints = (carAmount: number, idealAmount: number) => {
   if (carPriceDeviationDecimal > 0 || carPriceDeviationFromIdeal <= 1) {
     return 10;
   }
+
+  // car amount is more than DEVIATION_PERCENTAGE above idealPrice
+  const subsequentDeviationAmount = idealAmount * subsequentDeviationDecimal;
+  // calculate subsequent deviation using subsequentDeviationDecimal (usually will be less than chosenDeviationDecimal)
+  const carSubsequentDevations = Math.floor((idealAmount*(1 + chosenDeviationDecimal) - idealAmount) / subsequentDeviationAmount)
+  
+  console.log({ carAmount, subsequentDeviationAmount, carSubsequentDevations })
+
 
   // subscract 1 point for each deviation
   const pointsAwarded = 10 - Math.floor(carPriceDeviationFromIdeal);

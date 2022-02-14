@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { RankingConfigurationFormComponent } from './ranking-configuration-form.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +17,7 @@ import { RankingConfigurationFormComponent } from './ranking-configuration-form.
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
   ],
   declarations: [RankingConfigurationFormComponent],
   exports: [RankingConfigurationFormComponent]

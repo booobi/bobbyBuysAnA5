@@ -23,6 +23,16 @@
 // hack for custom mat-badge colors (I don't want to play with material theming)
 // https://stackoverflow.com/questions/58537350/how-to-customize-the-color-of-specific-mat-badge
 .offer-gold-medal .mat-badge-content {
-    background: red;
-    color: blue;
+    background: white;
+    color: #FFD700;
+}
+
+.offer-silver-medal .mat-badge-content {
+    background: white;
+    color: #C0C0C0;
+}
+
+.offer-bronze-medal .mat-badge-content {
+    background: white;
+    color: #CD7F32;
 }
