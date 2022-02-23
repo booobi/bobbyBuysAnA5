@@ -13,7 +13,7 @@ import {
 } from './audi.types';
 import { RankingFormValue } from './ranking-configuration-form';
 
-const calculateDeviationPoints = (
+export const calculateDeviationPoints = (
   carAmount: number,
   idealAmount: number,
   featureBaseDeviationPercentage: number,
