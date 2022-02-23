@@ -8,7 +8,7 @@ import {
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { createValueStream } from '../../utils';
-import { MAX_MILEAGE_POINTS, MAX_PRICE_POINTS } from '../../constants';
+import { BASE_MILEAGE_DEVIATION_PERCENTAGE, BASE_PRICE_DEVIATION_PERCENTAGE, MAX_MILEAGE_POINTS, MAX_PRICE_POINTS } from '../../constants';
 
 import { RankingFormValue } from './ranking-configuration-form.types';
 
@@ -28,7 +28,9 @@ import { RankingFormValue } from './ranking-configuration-form.types';
 export class RankingConfigurationFormComponent
   implements OnInit, OnDestroy, ControlValueAccessor
 {
+  readonly BASE_PRICE_DEVIATION_PERCENTAGE = BASE_PRICE_DEVIATION_PERCENTAGE;
   readonly MAX_PRICE_POINTS = MAX_PRICE_POINTS;
+  readonly BASE_MILEAGE_DEVIATION_PERCENTAGE = BASE_MILEAGE_DEVIATION_PERCENTAGE;
   readonly MAX_MILEAGE_POINTS = MAX_MILEAGE_POINTS;
 
   rankingForm = new FormGroup({

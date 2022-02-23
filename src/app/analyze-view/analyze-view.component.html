@@ -142,6 +142,7 @@
 
   <ng-template #featureScoreTemplate let-featureName let-car="car">
     <span *ngIf="$any(featurePoinsGetterMap)[featureName](car) as featureScore"
+      class="ml-5"
       [ngStyle]="{ color: featureScore > 0 ? 'green' : 'red' }">
       ({{ featureScore >= 0 ? '+' : '-' }}{{ featureScore }} points)
     </span> 

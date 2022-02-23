@@ -6,8 +6,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { RankingConfigurationFormComponent } from './ranking-configuration-form.component';
+
 
 
 @NgModule({
@@ -18,6 +20,7 @@ import { RankingConfigurationFormComponent } from './ranking-configuration-form.
     MatInputModule,
     MatListModule,
     MatIconModule,
+    MatTooltipModule
   ],
   declarations: [RankingConfigurationFormComponent],
   exports: [RankingConfigurationFormComponent]

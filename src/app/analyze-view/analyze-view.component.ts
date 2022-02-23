@@ -297,6 +297,8 @@ export class AnalyzeViewComponent implements OnInit {
       this.dataSource.data = scoredCars;
       this.dataSource.sort = this.sort;
     });
+
+    this.featurePoinsGetterMap$.subscribe(console.log);
   }
 
   ngOnDestroy() {
@@ -315,18 +317,23 @@ export class AnalyzeViewComponent implements OnInit {
   } ))
 
   getScoreClass(index: number) {
+    let offerMedalTypeClass;
     switch(index) {
       case 0: {
-        return 'offer-gold-medal';
+        offerMedalTypeClass = 'offer-medal--gold';
+        break;
       }
       case 1: {
-        return 'offer-silver-medal';
+        offerMedalTypeClass = 'offer-medal--silver';
+        break;
       }
       case 2: {
-        return 'offer-bronze-medal';
+        offerMedalTypeClass = 'offer-medal--bronze';
+        break;
       }
       default: return '';
-    } 
+    }
+    return `offer-medal ${offerMedalTypeClass}`
   }
 
   onReset() {

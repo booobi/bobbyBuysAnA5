@@ -5,8 +5,6 @@
     <mat-list-item>
       <mat-icon mat-list-icon>euro</mat-icon>
       <!-- TODO: slider - 'How likely are you to diviate from this price' -->
-      <!-- A X difference of 10% gives   -->
-      <!-- TODO: info tooltip of how its calculated -->
       <div mat-line class="flex">
         <span>My perfect price is: </span>
         <span class="ml-5 mr-5">
@@ -16,11 +14,11 @@
           </mat-form-field>
           .
         </span>
-        <span> Prices within <span class="deviation">5%</span> of this amout awards <span class="points-value">{{ MAX_PRICE_POINTS }}</span> points.
+        <span> Prices within <span class="deviation">{{ BASE_PRICE_DEVIATION_PERCENTAGE }}%</span> of this amount awards <span class="points-value">{{ MAX_PRICE_POINTS }}</span> points.
           <mat-icon
             aria-hidden="false"
             aria-label="Price calculation information"
-            matTooltip="Info about the action">
+            matTooltip="Every subsequent 1% increase subscracts 1 point.">
             info_outline
           </mat-icon>
         </span>
@@ -33,7 +31,6 @@
       <div mat-line>
         <span>To S Line trim level I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
-          <!-- <mat-label>Points</mat-label> -->
           <input formControlName="sLinePoints" matInput type="number" placeholder="0" class="points-value">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
@@ -45,7 +42,6 @@
       <div mat-line>
         <span>To Quattro models I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
-          <!-- <mat-label>Points</mat-label> -->
           <input formControlName="quattroPoints" matInput type="number" placeholder="0" class="points-value">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
@@ -57,13 +53,11 @@
       <div mat-line>
         <span>To TDI engines I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5 mr-5">
-          <!-- <mat-label>Points</mat-label> -->
           <input formControlName="tdiEnginePoints" matInput type="number" placeholder="0" class="points-value">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
         <span>. To TFSI engines I award: </span>
-        <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
-          <!-- <mat-label>Points</mat-label> -->
+        <mat-form-field appearance="standard" floatLabel="always" class="ml-5"> 
           <input formControlName="tfsiEnginePoints" matInput type="number" placeholder="0" class="points-value">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
@@ -75,7 +69,6 @@
       <div mat-line>
         <span>To models with a reverse camera I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
-          <!-- <mat-label>Points</mat-label> -->
           <input formControlName="reverseCameraPoints" matInput type="number" placeholder="0" class="points-value">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
@@ -84,7 +77,6 @@
 
     <mat-list-item>
       <mat-icon mat-list-icon>add_road</mat-icon>
-      <!-- TODO: info tooltip of how its calculated -->
       <div mat-line>
         <span>My perfect current mileage is: </span>
         <span class="ml-5 mr-5">
@@ -93,7 +85,14 @@
             <span matSuffix>km&nbsp;</span>
           </mat-form-field>.
         </span>
-        <span> Mileage within <span class="deviation">5%</span> of this amount awards <span class="points-value">{{ MAX_MILEAGE_POINTS }}</span> points</span>
+        <span> Mileage within <span class="deviation">{{ BASE_MILEAGE_DEVIATION_PERCENTAGE }}%</span> of this amount awards <span class="points-value">{{ MAX_MILEAGE_POINTS }}</span> points
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Mileage calculation information"
+            matTooltip="Every subsequent 1% increase subscracts 1 point.">
+            info_outline
+          </mat-icon>
+        </span>
       </div>
     </mat-list-item>
 
@@ -102,13 +101,11 @@
       <div mat-line>
         <span>To LED headlights I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5 mr-5">
-          <!-- <mat-label>Points</mat-label> -->
           <input formControlName="ledHeadlightsPoints" matInput type="number" placeholder="0" class="points-value">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
         <span>. To Matrix LED headlights I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
-          <!-- <mat-label>Points</mat-label> -->
           <input formControlName="matrixHeadlightsPoints" matInput type="number" placeholder="0" class="points-value">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
@@ -121,14 +118,11 @@
         <span>
           <span>To Standart (cup holder) interior ambient lighting I award: </span>
           <mat-form-field appearance="standard" floatLabel="always" class="ml-5 mr-5">
-            <!-- <mat-label>Points</mat-label> -->
             <input formControlName="standartAmbiencePoints" matInput type="number" placeholder="0" class="points-value">
             <span matSuffix class="ml-5">points&nbsp;</span>
           </mat-form-field>
           <span>. To full ambient lighting I award: </span>
           <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
-            <!-- <mat-label>Points</mat-label> -->
-            <!-- TODO: None gets 0 -->
             <input formControlName="fullAmbiencePoints" matInput type="number" placeholder="0" class="points-value">
             <span matSuffix class="ml-5">points&nbsp;</span>
           </mat-form-field>
@@ -141,7 +135,6 @@
       <div mat-line>
         <span>To models with paddle shifters I award: </span>
         <mat-form-field appearance="standard" floatLabel="always" class="ml-5">
-          <!-- <mat-label>Points</mat-label> -->
           <input formControlName="paddleShiftersPoints" matInput type="number" placeholder="0" class="points-value">
           <span matSuffix class="ml-5">points&nbsp;</span>
         </mat-form-field>
