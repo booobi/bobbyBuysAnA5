@@ -11,8 +11,7 @@ import { A5, A5offer, A5_AMBIENT_LIGHTING, A5_ENGINE, A5_HEADLIGHTS, ScoredA5off
 import { RankingFormValue } from './ranking-configuration-form';
 import { tableStyleConfig } from './table-stye.config';
 
-
-const mockCars: A5offer[] = [
+const a5Offers: A5offer[] = [
   {
     link: 'https://suchen.mobile.de/fahrzeuge/details.html?id=334091380',
     price: 32499,
@@ -241,7 +240,7 @@ export class AnalyzeViewComponent implements OnInit {
 
   configuartionFormControl = new FormControl(BOBBYS_A5_FORM_VALUE);
 
-  cars$: Observable<A5offer[]> = of(mockCars);
+  offers$: Observable<A5offer[]> = of(a5Offers);
 
   maxPoints$ = createValueStream<RankingFormValue>(this.configuartionFormControl).pipe(
     map((configFormValue) => {
@@ -278,8 +277,8 @@ export class AnalyzeViewComponent implements OnInit {
     shareReplay({ refCount: true, bufferSize: 1 })
   );
 
-  scoredCars$: Observable<ScoredA5offer[]> = combineLatest([
-    this.cars$,
+  scoredOffers$: Observable<ScoredA5offer[]> = combineLatest([
+    this.offers$,
     this.featurePoinsGetterMap$,
   ]).pipe(
     map(([cars, getterMap]) =>
@@ -293,8 +292,8 @@ export class AnalyzeViewComponent implements OnInit {
   private destroy$ = new Subject<boolean>();
 
   ngOnInit() {
-    this.scoredCars$.pipe(takeUntil(this.destroy$)).subscribe((scoredCars) => {
-      this.dataSource.data = scoredCars;
+    this.scoredOffers$.pipe(takeUntil(this.destroy$)).subscribe(scoredOffers => {
+      this.dataSource.data = scoredOffers;
       this.dataSource.sort = this.sort;
     });
 
@@ -311,9 +310,9 @@ export class AnalyzeViewComponent implements OnInit {
     this.sort.sort(({ id: 'score', start: 'desc'}) as MatSortable);
   }
 
-  medalClassGetter$: Observable<(carScore: number) => string> = this.scoredCars$.pipe(map(scoredCars => carScore => {
-    const sortedScores = [...(new Set(scoredCars.map(scoredCar => scoredCar.score)))].sort().reverse();
-    return this.getScoreClass(sortedScores.indexOf(carScore)); 
+  medalClassGetter$: Observable<(carScore: number) => string> = this.scoredOffers$.pipe(map(scoredOffers => offerScore => {
+    const sortedScores = [...(new Set(scoredOffers.map(scoredOffer => scoredOffer.score)))].sort().reverse();
+    return this.getScoreClass(sortedScores.indexOf(offerScore)); 
   } ))
 
   getScoreClass(index: number) {
