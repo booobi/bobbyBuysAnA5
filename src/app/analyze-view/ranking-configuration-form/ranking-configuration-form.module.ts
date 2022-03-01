@@ -10,8 +10,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { RankingConfigurationFormComponent } from './ranking-configuration-form.component';
 
-
-
 @NgModule({
   imports: [
     CommonModule,
