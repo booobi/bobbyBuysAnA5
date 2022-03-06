@@ -342,7 +342,7 @@ const a5Offers: A5offer[] = [
   }
 ];
 
-const BOBBYS_A5_FORM_VALUE: RankingFormValue = {
+const BOOOBI_A5_FORM_VALUE: RankingFormValue = {
   idealPrice: 33000,
   sLinePoints: 4,
   quattroPoints: 2,
@@ -382,7 +382,7 @@ export class AnalyzeViewComponent implements OnInit {
 
   dataSource = new MatTableDataSource<ScoredA5offer>([]);
 
-  configuartionFormControl = new FormControl(BOBBYS_A5_FORM_VALUE);
+  configuartionFormControl = new FormControl(BOOOBI_A5_FORM_VALUE);
 
   offers$: Observable<A5offer[]> = of(a5Offers);
 
@@ -480,7 +480,7 @@ export class AnalyzeViewComponent implements OnInit {
   }
 
   onReset() {
-    this.configuartionFormControl.setValue(BOBBYS_A5_FORM_VALUE);
+    this.configuartionFormControl.setValue(BOOOBI_A5_FORM_VALUE);
   }
 
   private calculateCarScore(car: A5offer, featurePointsGetterMap: any) {

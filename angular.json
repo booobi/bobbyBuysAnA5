@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bobbyBuysAnA5": {
+    "booobiBuysAnA5": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/bobby-buys-an-a5",
+            "outputPath": "dist/booobi-buys-an-a5",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "bobbyBuysAnA5:build:production"
+              "browserTarget": "booobiBuysAnA5:build:production"
             },
             "development": {
-              "browserTarget": "bobbyBuysAnA5:build:development"
+              "browserTarget": "booobiBuysAnA5:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bobbyBuysAnA5:build"
+            "browserTarget": "booobiBuysAnA5:build"
           }
         },
         "test": {
@@ -109,5 +109,5 @@
       }
     }
   },
-  "defaultProject": "bobbyBuysAnA5"
+  "defaultProject": "booobiBuysAnA5"
 }
